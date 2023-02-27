@@ -1,5 +1,7 @@
-import { useLoaderData } from "react-router-dom";
+import { Outlet, useLoaderData } from "react-router-dom";
 import { fetchData } from "../helpers";
+import Intro from "../components/Intro";
+import { toast } from "react-toastify";
 
 export function dashboardLoader() {
   const userName = fetchData("userName");
@@ -7,14 +9,25 @@ export function dashboardLoader() {
   return { userName };
 }
 
+export async function dashboardAction({ request }) {
+  const data = await request.formData();
+  const formData = Object.fromEntries(data);
+  try {
+    localStorage.setItem("userName", JSON.stringify(formData.userName));
+    return toast.success(`Welcome ${formData.userName}`);
+  } catch (error) {
+    throw new Error("There was a problem creating your account.");
+  }
+}
+
 const Dashboard = () => {
   const { userName } = useLoaderData();
 
   return (
-    <div>
-      <h1>{userName}</h1>
-      Dashboard
-    </div>
+    <>
+      {userName ? <p>{userName}</p> : <Intro />}
+      <Outlet />
+    </>
   );
 };
 
