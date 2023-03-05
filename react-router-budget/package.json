@@ -1,8 +1,9 @@
 {
-  "name": "react-router-budget",
+  "name": "budgeting",
   "private": true,
   "version": "0.0.0",
   "type": "module",
+  "homepage": "https://oleksandr-berd.github.io/budgeting/",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
