@@ -1,4 +1,4 @@
-import { Outlet, useLoaderData } from "react-router-dom";
+import { Outlet, useLoaderData, Link } from "react-router-dom";
 import { createBudget, createExpense, fetchData, waait } from "../helpers";
 import Intro from "../components/Intro";
 import { toast } from "react-toastify";
@@ -83,10 +83,15 @@ const Dashboard = () => {
                   <div className="grid-md">
                     <h2>Recent expenses</h2>
                     <Table
-                      expenses={expenses.sort(
-                        (a, b) => b.createdAt - a.createdAt
-                      )}
+                      expenses={expenses
+                        .sort((a, b) => b.createdAt - a.createdAt)
+                        .slice(0, 8)}
                     />
+                    {expenses.length > 8 && (
+                      <Link to="expenses" className="btn btn--dark">
+                        View all expenses
+                      </Link>
+                    )}
                   </div>
                 )}
               </div>
